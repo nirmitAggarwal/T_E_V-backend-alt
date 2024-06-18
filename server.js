@@ -54,6 +54,7 @@ app.post("/contact", async (req, res) => {
     });
     await p.save();
     res.status(201).send("Contact message added");
+    console.log(p);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -88,6 +89,7 @@ app.post("/gal-add", async (req, res) => {
     });
     await p.save();
     res.status(201).send("Gallery item added");
+    console.log(p);
   } catch (err) {
     res.status(500).send(err);
   }
