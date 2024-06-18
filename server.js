@@ -24,8 +24,14 @@ const dbmod = mongoose.model("item", {
 // Connect to MongoDB
 mongoose
   .connect(
-    `mongodb+srv://nirmitjee:${process.env.DB_PASS_KEY}@gallery-tev.c6uel.mongodb.net/?retryWrites=true&w=majority&appName=Gallery-TEV`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    `mongodb+srv://nirmitjee:${process.env.DB_PASS_KEY}@gallery-tev.c6uel.mongodb.net`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true, // Added to handle deprecation warning
+      useFindAndModify: false, // Added to handle deprecation warning
+      dbName: 'Gallery-TEV', // Added to specify database name
+    }
   )
   .then(() => {
     console.log("Connected to MongoDB");
