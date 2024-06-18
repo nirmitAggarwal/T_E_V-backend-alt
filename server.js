@@ -1,7 +1,6 @@
 // server.js
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config(); // Load environment variables from .env file
 
@@ -9,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json()); // Parse JSON bodies for all routes
 app.use(cors());
 
 // Mongoose Model
@@ -24,7 +23,8 @@ const dbmod = mongoose.model("item", {
 // Connect to MongoDB
 mongoose
   .connect(
-    `mongodb+srv://nirmitjee:${process.env.DB_PASS_KEY}@gallery-tev.c6uel.mongodb.net/?retryWrites=true&w=majority&appName=Gallery-TEV`
+    `mongodb+srv://nirmitjee:${process.env.DB_PASS_KEY}@gallery-tev.c6uel.mongodb.net/?retryWrites=true&w=majority&appName=Gallery-TEV`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
     console.log("Connected to MongoDB");
@@ -45,7 +45,7 @@ app.get("/gallery", async (req, res) => {
 
 app.post("/contact", async (req, res) => {
   try {
-    console.log(req.body);
+     console.log(req.body);
     const p = new dbmod({
       type: "mssg",
       val1: req.body.name,
@@ -63,6 +63,7 @@ app.post("/contact", async (req, res) => {
 
 app.get("/del", async (req, res) => {
   try {
+
     const items = await dbmod.find();
     res.json(items);
   } catch (err) {
@@ -72,7 +73,7 @@ app.get("/del", async (req, res) => {
 
 app.post("/deleteItem", async (req, res) => {
   try {
-    
+     console.log(req.body);
     await dbmod.deleteOne({ _id: req.body.itemId });
     res.status(200).send("Item deleted");
   } catch (err) {
