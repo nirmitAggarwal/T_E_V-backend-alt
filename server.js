@@ -45,6 +45,7 @@ app.get("/gallery", async (req, res) => {
 
 app.post("/contact", async (req, res) => {
   try {
+    console.log(req.body);
     const p = new dbmod({
       type: "mssg",
       val1: req.body.name,
@@ -71,6 +72,7 @@ app.get("/del", async (req, res) => {
 
 app.post("/deleteItem", async (req, res) => {
   try {
+    
     await dbmod.deleteOne({ _id: req.body.itemId });
     res.status(200).send("Item deleted");
   } catch (err) {
@@ -80,6 +82,7 @@ app.post("/deleteItem", async (req, res) => {
 
 app.post("/gal-add", async (req, res) => {
   try {
+     console.log(req.body);
     const p = new dbmod({
       type: "gallery",
       val1: req.body.val1,
